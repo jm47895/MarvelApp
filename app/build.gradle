@@ -2,13 +2,15 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.jordanmadrigal.marvelapp"
+        applicationId "com.jordanmadrigal.comicapp"
         minSdk 23
         targetSdk 31
         versionCode 1
@@ -30,6 +32,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileSdkVersion 31
+    buildToolsVersion '31.0.0'
 }
 
 dependencies {
@@ -38,7 +47,52 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
-    testImplementation 'junit:junit:4.+'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
+    testImplementation 'androidx.test:core:1.4.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
+
+    //KTX Extensions
+    def fragment_ext_version = "1.3.6"
+    implementation "androidx.fragment:fragment-ktx:$fragment_ext_version"
+
+    def lifecycle_ext_version = "2.4.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_ext_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_ext_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_ext_version"
+
+    //Testing
+    def junit_version = "4.13.2"
+    testImplementation "junit:junit:$junit_version"
+    def truth_version = "1.1.3"
+    androidTestImplementation "com.google.truth:truth:$truth_version"
+
+    //Async operations
+    def coroutines_version = "1.5.0"
+    kapt "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    //Caching
+    def room_version = "2.3.0"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    //Network
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //Dependency Injection
+    def hilt_version = "2.38.1"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //Image processing
+    def glide_version = "4.12.0"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
+    //Leak detection
+    def leak_canary_version = "2.7"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
 }
