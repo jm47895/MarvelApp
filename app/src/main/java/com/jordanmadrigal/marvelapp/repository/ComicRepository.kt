@@ -56,20 +56,18 @@ class ComicRepository @Inject constructor(
                 Log.e(TAG, response.code().toString())
             }
         }catch (e: Exception){
-
-            apiStatus.postValue(FAILURE)
-
-            Log.e(TAG, "Marvel database not reached.")
+            apiStatus.postValue(NO_INTERNET)
         }
     }.flowOn(Dispatchers.IO)
 
-    fun getApiStatus(): MutableLiveData<Int> {
+    fun getApiStatus(): MutableLiveData<Int>{
         return apiStatus
     }
 
     companion object{
         private val TAG = ComicRepository::class.java.simpleName
-        const val FAILURE = 0
+        const val FAILURE = -1
+        const val NO_INTERNET = 0
         const val SUCCESS = 1
         const val LOADING = 2
     }

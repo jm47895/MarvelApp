@@ -2,4 +2,9 @@
     <string name="app_name">MarvelApp</string>
     <string name="picture_of_comic">Picture of comic</string>
     <string name="data_provided_by_marvel_2021_marvel">Data provided by Marvel. © 2021 Marvel</string>
+    <string name="offline_msg">Unable to sync data. You are offline.</string>
+    <string name="db_error_msg">Unable to sync data.</string>
+    <string name="sync_button">Sync Button</string>
+    <string name="data_synced">Data synced</string>
+    <string name="we_weren_t_able_to_get_the_data">We weren\'t able to get the data.</string>
 </resources>

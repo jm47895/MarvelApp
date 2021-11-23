@@ -10,7 +10,9 @@ import com.jordanmadrigal.marvelapp.R
 import com.jordanmadrigal.marvelapp.databinding.ActivityMainBinding
 import com.jordanmadrigal.marvelapp.repository.ComicRepository.Companion.FAILURE
 import com.jordanmadrigal.marvelapp.repository.ComicRepository.Companion.LOADING
+import com.jordanmadrigal.marvelapp.repository.ComicRepository.Companion.NO_INTERNET
 import com.jordanmadrigal.marvelapp.repository.ComicRepository.Companion.SUCCESS
+import com.jordanmadrigal.marvelapp.util.AndroidUtils
 import com.jordanmadrigal.marvelapp.viewmodel.ComicViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity(){
     private val viewModel: ComicViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
+    private var isSyncTriggered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +32,19 @@ class MainActivity : AppCompatActivity(){
 
         viewModel.syncComicData()
 
+        setupListeners()
         setupObservers()
+    }
 
+    private fun setupListeners() {
+        binding.syncButton.setOnClickListener {
+            viewModel.syncComicData()
+            isSyncTriggered = true
+        }
     }
 
     private fun setupObservers() {
+
         viewModel.getComicData().observe(this, Observer { comic ->
             comic?.let {
                 Glide.with(binding.root).load("https${it.thumbnail?.path?.substring(4)}.${it.thumbnail?.extension}").into(binding.comicImageIv)
@@ -44,9 +55,22 @@ class MainActivity : AppCompatActivity(){
 
         viewModel.getApiStatus().observe(this, Observer { status ->
             when(status){
-                SUCCESS -> displayProgressBar(false)
+                SUCCESS -> {
+                    if(isSyncTriggered){
+                        AndroidUtils.showSnackBar(this, getString(R.string.data_synced))
+                        isSyncTriggered = false
+                    }
+                    displayProgressBar(false)
+                }
                 LOADING -> displayProgressBar(true)
-                FAILURE -> displayProgressBar(false)
+                NO_INTERNET ->{
+                    displayProgressBar(false)
+                    AndroidUtils.showSnackBar(this, getString(R.string.offline_msg))
+                }
+                FAILURE -> {
+                    displayProgressBar(false)
+                    AndroidUtils.showSnackBar(this, getString(R.string.db_error_msg))
+                }
             }
         })
     }
