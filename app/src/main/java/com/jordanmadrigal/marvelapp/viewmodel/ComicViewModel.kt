@@ -1,9 +1,6 @@
 package com.jordanmadrigal.marvelapp.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.jordanmadrigal.marvelapp.data.model.Comic
 import com.jordanmadrigal.marvelapp.repository.ComicRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,5 +23,9 @@ class ComicViewModel @Inject constructor(
 
     fun getComicData(): LiveData<Comic> {
         return comicRepository.getComicInCache("67631").asLiveData()
+    }
+
+    fun getApiStatus(): MutableLiveData<Int> {
+        return  comicRepository.getApiStatus()
     }
 }

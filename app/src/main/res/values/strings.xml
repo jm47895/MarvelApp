@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MarvelApp</string>
     <string name="picture_of_comic">Picture of comic</string>
+    <string name="data_provided_by_marvel_2021_marvel">Data provided by Marvel. © 2021 Marvel</string>
 </resources>
