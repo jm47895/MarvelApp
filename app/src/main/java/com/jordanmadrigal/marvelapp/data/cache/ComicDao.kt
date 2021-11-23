@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jordanmadrigal.marvelapp.data.Comic
+import com.jordanmadrigal.marvelapp.data.model.Comic
 import kotlinx.coroutines.flow.Flow
 
 @Dao
