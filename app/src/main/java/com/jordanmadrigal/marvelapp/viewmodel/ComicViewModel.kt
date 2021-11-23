@@ -22,7 +22,7 @@ class ComicViewModel @Inject constructor(
     }
 
     fun getComicData(): LiveData<Comic> {
-        return comicRepository.getComicInCache("67631").asLiveData()
+        return comicRepository.getComicInCache(67631).asLiveData()
     }
 
     fun getApiStatus(): MutableLiveData<Int> {

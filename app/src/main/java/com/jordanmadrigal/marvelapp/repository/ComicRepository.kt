@@ -25,7 +25,7 @@ class ComicRepository @Inject constructor(
         cacheDb.getComicDao().insertComic(comic)
     }
 
-    fun getComicInCache(id: String): Flow<Comic> {
+    fun getComicInCache(id: Int): Flow<Comic> {
         return cacheDb.getComicDao().getComic(id)
     }
 

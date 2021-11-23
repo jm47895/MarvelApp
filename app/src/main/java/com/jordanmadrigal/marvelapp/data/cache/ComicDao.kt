@@ -14,5 +14,5 @@ interface ComicDao {
     suspend fun insertComic(comic: Comic): Long
 
     @Query("SELECT * FROM comic_table where comic_id = :comicId")
-    fun getComic(comicId: String): Flow<Comic>
+    fun getComic(comicId: Int): Flow<Comic>
 }
